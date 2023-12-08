@@ -1,7 +1,11 @@
 <x-app-layout>
     <head>
-        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     </head>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -15,7 +19,35 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're on Employees page!") }}
                 </div>
+                <div class="mb-3 ml-2">
+                    <x-primary-button><a href= '/employees/create/'>{{ __('Create') }}</a></x-primary-button>
+                </div>
+                <table id="employees" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Logo</th>
+                            <th>Website</th>
+                        </tr>
+                    </thead>
+                    @foreach ($employees as $employee)
+                    <tbody>
+                        <tr>
+                            <td>{{ $employee->firstName }}</td>
+                            <td>{{ $employee->lastName }}</td>
+                            <td>{{ $employee->company_id }}</td>
+                            <td>{{ $employee->email }}</td>
+                            <td>{{ $employee->phone }}</td>
+                        </tr>
+                    </tbody>
+                    @endforeach
+                </table>
             </div>
         </div>
     </div>
+    <script>
+        let table = new DataTable('#employees');
+    </script>
 </x-app-layout>

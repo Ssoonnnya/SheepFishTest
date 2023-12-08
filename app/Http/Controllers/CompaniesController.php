@@ -12,8 +12,8 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-            Companies::all();
-            return view('companies.show');
+            $companies = Companies::all();
+            return view('companies.show', ['companies' => $companies]);
     }
 
     /**
@@ -21,7 +21,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -29,7 +29,20 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'logo' => 'required|string',
+            'website' => 'required|url',
+        ]);
+
+        $productCreate = Companies::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'logo' => $request->get('logo'),
+            'website' => $request->get('website'),
+        ]);
+        return redirect('/companies');
     }
 
     /**

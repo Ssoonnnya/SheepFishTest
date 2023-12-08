@@ -12,8 +12,8 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        Employees::all();
-        return view('employee.show');
+        $employees = Employees::all();
+        return view('employee.show', ['employees' => $employees]);
     }
 
     /**
@@ -21,7 +21,7 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        return view('employee.create');
     }
 
     /**
@@ -29,7 +29,22 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'company_id' => 'required|integer',
+            'email' => 'required|email',
+            'phone' => 'required|integer',
+        ]);
+
+        $productCreate = Employees::create([
+            'firstName' => $request->get('firstName'),
+            'lastName' => $request->get('lastName'),
+            'company_id' => $request->get('company_id'),
+            'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
+        ]);
+        return redirect('/employees');
     }
 
     /**
