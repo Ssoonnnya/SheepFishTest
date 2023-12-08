@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Companies;
+use App\Models\Employees;
 
-class CompaniesController extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-            Companies::all();
-            return view('companies.show');
+        Employees::all();
+        return view('employee.show');
     }
 
     /**

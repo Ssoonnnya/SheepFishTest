@@ -1,3 +1,9 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+</head>
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,8 +23,13 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('show.companies')" :active="request()->routeIs('show.companies')">
+                    <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
                         {{ __('Companies') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                        {{ __('Employees') }}
                     </x-nav-link>
                 </div>
             </div>

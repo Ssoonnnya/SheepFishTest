@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\EmployeesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +32,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['admin'])->group(function () {
-    Route::get('/companies', [CompaniesController::class, 'index'])->name('show.companies');
+
+    Route::resource('companies', CompaniesController::class);
+    Route::resource('employees', EmployeesController::class);
 });
 
 require __DIR__.'/auth.php';
