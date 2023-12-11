@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Companies;
+use Illuminate\Support\Facades\DB;
 
 class CompaniesController extends Controller
 {
     public function index()
     {
-            $companies = Companies::all();
-            return view('companies.show', ['companies' => $companies]);
+            $companies = Companies::paginate(10);
+            return view('companies.show', compact('companies'));
     }
 
     public function create()
@@ -61,7 +62,7 @@ class CompaniesController extends Controller
             'logo' => 'required|image:jpg, jpeg, png|dimensions:min_width=100,min_height=100',
             'website' => 'required|url',
         ]);
-        
+
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $name = 'logo/' . uniqid() . '.' . $file->extension();
