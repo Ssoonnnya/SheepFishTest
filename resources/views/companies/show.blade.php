@@ -30,6 +30,9 @@
                             <th>Email</th>
                             <th>Logo</th>
                             <th>Website</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+
                         </tr>
                     </thead>
                     @foreach ($companies as $company)
@@ -40,6 +43,18 @@
                             <td>{{ $company->email }}</td>
                             <td>{{ $company->logo }}</td>
                             <td>{{ $company->website }}</td>
+                            <td>
+                                <button><a href= '/companies/{{ $company->id }}/edit'>{{ __('Edit') }}</a></button>
+                            </td>
+                            <td>
+                                <form action="{{ route('companies.destroy', $company->id) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class='text-red-500'>
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     </tbody>
                     @endforeach

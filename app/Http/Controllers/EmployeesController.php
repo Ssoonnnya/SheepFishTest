@@ -60,7 +60,9 @@ class EmployeesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employees = Employees::find($id);
+        return view('employee.edit', ['employees' => $employees]);
+
     }
 
     /**
@@ -68,14 +70,36 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+            $validated = $request->validate([
+                'firstName' => 'required|string',
+                'lastName' => 'required|string',
+                'company_id' => 'required|integer',
+                'email' => 'required|email',
+                'phone' => 'required|integer',
+            ]);
+
+        $employee = Employees::findOrFail($id);
+
+        $employee->update($validated);
+
+        return redirect()->route('employees.show', $employee->id)->with('success', 'Company updated successfully');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $employee = Employees::find($id);
+
+        if (!$employee) {
+            return redirect()->route('employees.index')->with('error', 'Employee not found');
+        }
+
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully');
     }
+
 }

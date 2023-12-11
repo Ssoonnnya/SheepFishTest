@@ -26,20 +26,36 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Company ID</th>
                             <th>Email</th>
-                            <th>Logo</th>
-                            <th>Website</th>
+                            <th>Phone</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     @foreach ($employees as $employee)
                     <tbody>
                         <tr>
+                            <td>{{ $employee->id }}</td>
                             <td>{{ $employee->firstName }}</td>
                             <td>{{ $employee->lastName }}</td>
                             <td>{{ $employee->company_id }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
+                            <td>
+                                <button><a href= '/employees/{{ $employee->id }}/edit'>{{ __('Edit') }}</a></button>
+                            </td>
+                            <td>
+                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class='text-red-500'>
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     </tbody>
                     @endforeach
