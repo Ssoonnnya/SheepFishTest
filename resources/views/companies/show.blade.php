@@ -41,7 +41,7 @@
                             <td>{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->email }}</td>
-                            <td>{{ $company->logo }}</td>
+                            <td> <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo"></td>
                             <td>{{ $company->website }}</td>
                             <td>
                                 <button><a href= '/companies/{{ $company->id }}/edit'>{{ __('Edit') }}</a></button>

@@ -23,22 +23,25 @@ class CompaniesController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
-            'logo' => 'required|string',
+            'logo' => 'required|image:jpg, jpeg, png|dimensions:min_width=100,min_height=100',
             'website' => 'required|url',
         ]);
 
-        $productCreate = Companies::create([
+        $file = $request->file('logo');
+        $name = '/logo/' . uniqid() . '.' . $file->extension();
+        $file->storePubliclyAs('public', $name);
+        $fileData['logo'] = $name;
+
+
+        $companyCreate = Companies::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'logo' => $request->get('logo'),
+            'logo' => $name,
             'website' => $request->get('website'),
         ]);
         return redirect('/companies');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
@@ -50,17 +53,22 @@ class CompaniesController extends Controller
         return view('companies.edit', ['companies' => $companies]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
-            'logo' => 'required|string',
+            'logo' => 'required|image:jpg, jpeg, png|dimensions:min_width=100,min_height=100',
             'website' => 'required|url',
         ]);
+        
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $name = 'logo/' . uniqid() . '.' . $file->extension();
+            $file->storePubliclyAs('public', $name);
+            $validated['logo'] = $name;
+        }
+
         $company = Companies::findOrFail($id);
 
         $company->update($validated);
@@ -68,9 +76,6 @@ class CompaniesController extends Controller
         return redirect()->route('companies.index', $company->id)->with('success', 'Company updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $company = Companies::find($id);
