@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex justify-center items-center h-screen" >
 
-    <form method="POST" action="{{ route('companies.store') }}"  enctype="multipart/form-data" class="mt-6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form method="POST" action="{{ route('companies.store') }}"  enctype="multipart/form-data" class="mt-6 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"style="margin-left: 500px">
         @csrf
             <div>
                 <h1 class="font-bold text-gray-500 ml-6 ">

@@ -1,12 +1,4 @@
 <x-app-layout>
-    <head>
-        <script
-            src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-    </head>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Employees') }}
@@ -22,7 +14,7 @@
                 <div class="mb-3 ml-2">
                     <x-primary-button><a href= '/employees/create/'>{{ __('Create') }}</a></x-primary-button>
                 </div>
-                <table id="employees" class="display">
+                <table id="employees" class="table dataTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -35,35 +27,38 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    @foreach ($employees as $employee)
                     <tbody>
-                        <tr>
-                            <td>{{ $employee->id }}</td>
-                            <td>{{ $employee->firstName }}</td>
-                            <td>{{ $employee->lastName }}</td>
-                            <td>{{ $employee->company_id }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->phone }}</td>
-                            <td>
-                                <button><a href= '/employees/{{ $employee->id }}/edit'>{{ __('Edit') }}</a></button>
-                            </td>
-                            <td>
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class='text-red-500'>
-                                        {{ __('Delete') }}
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                        @foreach ($employees as $employee)
+                            <tr>
+                                <td>{{ $employee->id }}</td>
+                                <td>{{ $employee->firstName }}</td>
+                                <td>{{ $employee->lastName }}</td>
+                                <td>{{ $employee->company_id }}</td>
+                                <td>{{ $employee->email }}</td>
+                                <td>{{ $employee->phone }}</td>
+                                <td>
+                                    <button><a href= '/employees/{{ $employee->id }}/edit'>{{ __('Edit') }}</a></button>
+                                </td>
+                                <td>
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class='text-red-500'>
+                                            {{ __('Delete') }}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
-                    @endforeach
                 </table>
+                <script src="https://cdn.datatables.net/v/dt/dt-1.11.10/datatables.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#employees').DataTable();
+                    });
+                </script>
             </div>
         </div>
     </div>
-    <script>
-        let table = new DataTable('#employees');
-    </script>
 </x-app-layout>
