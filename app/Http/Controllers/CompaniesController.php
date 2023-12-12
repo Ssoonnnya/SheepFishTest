@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Companies;
 use Illuminate\Support\Facades\DB;
+use \Mailjet\Resources;
 
 class CompaniesController extends Controller
 {
@@ -40,7 +41,36 @@ class CompaniesController extends Controller
             'logo' => $name,
             'website' => $request->get('website'),
         ]);
+        $companyArray = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'logo' => $name,
+            'website' => $request->get('website'),
+        ];
+
+        $this->mailjetEmail($companyArray);
+
         return redirect('/companies');
+    }
+
+    public function mailjetEmail(array $companyArray)
+    {
+        $mailjet = new \Mailjet\Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'),true,['version' => 'v3.1']);
+        $email = [
+
+            'FromEmail' => 'your@email.com',
+            'FromName' => 'Your Name',
+            'Subject' => 'New Company Created',
+            'HTMLPart' => "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3>
+            <br />May the delivery force be with you!",
+            'Recipients' => [
+                [
+                    'Email' => 'recipient@email.com',
+                ],
+            ],
+        ];
+
+        $response = $mailjet->post(Resources::$Email, ['body' => $email]);
     }
 
     public function show(string $id)

@@ -123,4 +123,9 @@ return [
         ],
     ],
 
+    'mailjet' => [
+        'api_key' => env('6cc7f90a6eb172c261b2d0dd856916be'),
+        'api_secret' => env('7147e15fbf71ac725d403002b3181254'),
+    ],
+
 ];
